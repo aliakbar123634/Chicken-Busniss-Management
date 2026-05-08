@@ -1,0 +1,636 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Supplier</title>
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Inter',sans-serif;
+        }
+
+        body{
+
+            min-height:100vh;
+
+            background:
+            radial-gradient(circle at top left,#ef444415,transparent 20%),
+            radial-gradient(circle at bottom right,#f8717115,transparent 20%),
+            #f8fafc;
+
+            overflow-x:hidden;
+
+            padding:40px 20px;
+
+            position:relative;
+        }
+
+        /* =====================================
+           BACKGROUND GLOW
+        ====================================== */
+
+        .bg-glow{
+
+            position:fixed;
+
+            width:350px;
+            height:350px;
+
+            background:#ef4444;
+
+            border-radius:50%;
+
+            filter:blur(150px);
+
+            opacity:0.12;
+
+            top:-120px;
+            right:-120px;
+
+            z-index:0;
+        }
+
+        .bg-glow2{
+
+            position:fixed;
+
+            width:300px;
+            height:300px;
+
+            background:#f87171;
+
+            border-radius:50%;
+
+            filter:blur(140px);
+
+            opacity:0.10;
+
+            bottom:-120px;
+            left:-120px;
+
+            z-index:0;
+        }
+
+        /* =====================================
+           WRAPPER
+        ====================================== */
+
+        .main-wrapper{
+
+            min-height:100vh;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            position:relative;
+
+            z-index:5;
+        }
+
+        /* =====================================
+           MAIN CARD
+        ====================================== */
+
+        .delete-card{
+
+            width:100%;
+            max-width:650px;
+
+            background:rgba(255,255,255,0.75);
+
+            backdrop-filter:blur(18px);
+
+            border-radius:36px;
+
+            overflow:hidden;
+
+            border:1px solid rgba(255,255,255,0.7);
+
+            box-shadow:
+            0 15px 50px rgba(15,23,42,0.08);
+
+            animation:cardFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat{
+
+            0%{
+                transform:translateY(0px);
+            }
+
+            50%{
+                transform:translateY(-8px);
+            }
+
+            100%{
+                transform:translateY(0px);
+            }
+
+        }
+
+        /* =====================================
+           TOP SECTION
+        ====================================== */
+
+        .top-section{
+
+            background:
+            linear-gradient(
+            135deg,
+            #7f1d1d,
+            #991b1b,
+            #dc2626
+            );
+
+            color:white;
+
+            text-align:center;
+
+            padding:55px 40px;
+
+            position:relative;
+
+            overflow:hidden;
+        }
+
+        .top-section::before{
+
+            content:'';
+
+            position:absolute;
+            inset:0;
+
+            background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+
+            background-size:40px 40px;
+        }
+
+        .top-content{
+            position:relative;
+            z-index:5;
+        }
+
+        /* =====================================
+           DELETE ICON
+        ====================================== */
+
+        .delete-icon{
+
+            width:110px;
+            height:110px;
+
+            margin:auto;
+
+            border-radius:50%;
+
+            background:rgba(255,255,255,0.12);
+
+            border:1px solid rgba(255,255,255,0.15);
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            font-size:42px;
+
+            animation:pulse 2s infinite;
+        }
+
+        @keyframes pulse{
+
+            0%{
+                transform:scale(1);
+            }
+
+            50%{
+                transform:scale(1.05);
+            }
+
+            100%{
+                transform:scale(1);
+            }
+
+        }
+
+        .top-content h1{
+
+            margin-top:30px;
+
+            font-size:38px;
+
+            font-weight:700;
+        }
+
+        .top-content p{
+
+            margin-top:14px;
+
+            color:#fecaca;
+
+            line-height:1.8;
+
+            max-width:430px;
+
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+        /* =====================================
+           SUPPLIER INFO
+        ====================================== */
+
+        .supplier-info{
+
+            padding:40px;
+        }
+
+        .supplier-box{
+
+            display:flex;
+            align-items:center;
+
+            gap:20px;
+
+            background:#f8fafc;
+
+            border:1px solid #e2e8f0;
+
+            border-radius:24px;
+
+            padding:24px;
+
+            margin-bottom:30px;
+        }
+
+        .supplier-image{
+
+            width:90px;
+            height:90px;
+
+            border-radius:24px;
+
+            object-fit:cover;
+
+            box-shadow:
+            0 8px 25px rgba(15,23,42,0.08);
+        }
+
+        .supplier-details h3{
+
+            font-size:28px;
+
+            font-weight:700;
+
+            color:#0f172a;
+        }
+
+        .supplier-phone{
+
+            margin-top:10px;
+
+            color:#64748b;
+
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .balance-badge{
+
+            margin-top:15px;
+
+            display:inline-block;
+
+            background:#fee2e2;
+
+            color:#991b1b;
+
+            padding:10px 16px;
+
+            border-radius:14px;
+
+            font-size:13px;
+
+            font-weight:600;
+        }
+
+        /* =====================================
+           WARNING BOX
+        ====================================== */
+
+        .warning-box{
+
+            background:#fef2f2;
+
+            border:1px solid #fecaca;
+
+            border-radius:24px;
+
+            padding:24px;
+
+            margin-bottom:30px;
+        }
+
+        .warning-box h4{
+
+            color:#991b1b;
+
+            font-size:22px;
+
+            font-weight:700;
+
+            margin-bottom:12px;
+        }
+
+        .warning-box p{
+
+            color:#7f1d1d;
+
+            margin:0;
+
+            line-height:1.8;
+        }
+
+        /* =====================================
+           BUTTONS
+        ====================================== */
+
+        .action-buttons{
+
+            display:flex;
+
+            gap:16px;
+
+            flex-wrap:wrap;
+        }
+
+        .btn-custom{
+
+            flex:1;
+
+            height:58px;
+
+            border:none;
+
+            border-radius:18px;
+
+            font-size:16px;
+
+            font-weight:600;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            gap:10px;
+
+            transition:0.3s;
+
+            text-decoration:none;
+        }
+
+        .btn-cancel{
+
+            background:#f1f5f9;
+
+            color:#0f172a;
+        }
+
+        .btn-delete{
+
+            background:#dc2626;
+
+            color:white;
+
+            box-shadow:
+            0 10px 30px rgba(220,38,38,0.25);
+        }
+
+        .btn-custom:hover{
+
+            transform:translateY(-3px);
+        }
+
+        /* =====================================
+           MOBILE
+        ====================================== */
+
+        @media(max-width:576px){
+
+            body{
+                padding:20px 12px;
+            }
+
+            .top-section{
+                padding:45px 25px;
+            }
+
+            .supplier-info{
+                padding:30px 20px;
+            }
+
+            .top-content h1{
+                font-size:30px;
+            }
+
+            .supplier-box{
+                flex-direction:column;
+                text-align:center;
+            }
+
+            .action-buttons{
+                flex-direction:column;
+            }
+
+            .btn-custom{
+                width:100%;
+            }
+
+            .supplier-details h3{
+                font-size:24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+
+<!-- =====================================
+     WRAPPER
+===================================== -->
+
+<div class="main-wrapper">
+
+    <!-- =====================================
+         MAIN CARD
+    ====================================== -->
+
+    <div class="delete-card">
+
+        <!-- =====================================
+             TOP SECTION
+        ====================================== -->
+
+        <div class="top-section">
+
+            <div class="top-content">
+
+                <div class="delete-icon">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                </div>
+
+                <h1>
+
+                    Delete Supplier
+
+                </h1>
+
+                <p>
+
+                    This action cannot be undone.
+                    Please confirm before permanently deleting
+                    this supplier profile.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- =====================================
+             SUPPLIER INFO
+        ====================================== -->
+
+        <div class="supplier-info">
+
+            <!-- Supplier -->
+
+            <div class="supplier-box">
+
+                <img
+                    src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=1200&auto=format&fit=crop"
+                    class="supplier-image"
+                >
+
+                <div class="supplier-details">
+
+                    <h3>
+
+                        {{ supplier.name }}
+
+                    </h3>
+
+                    <div class="supplier-phone">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        {{ supplier.phone }}
+
+                    </div>
+
+                    <span class="balance-badge">
+
+                        Opening Balance:
+                        Rs {{ supplier.opening_balance }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- Warning -->
+
+            <div class="warning-box">
+
+                <h4>
+
+                    Warning
+
+                </h4>
+
+                <p>
+
+                    Deleting this supplier will permanently remove
+                    all associated information from the ERP system.
+
+                </p>
+
+            </div>
+
+            <!-- Buttons -->
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="action-buttons">
+
+                    <!-- Cancel -->
+
+                    <a
+                        href="{% url 'supplier_list' %}"
+                        class="btn-custom btn-cancel"
+                    >
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Cancel
+
+                    </a>
+
+                    <!-- Delete -->
+
+                    <button
+                        type="submit"
+                        class="btn-custom btn-delete"
+                    >
+
+                        <i class="fa-solid fa-trash"></i>
+
+                        Delete Supplier
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
